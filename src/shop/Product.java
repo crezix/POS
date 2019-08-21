@@ -470,5 +470,5 @@ public class Product extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> status;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
-    
+    //aa
 }
