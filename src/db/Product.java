@@ -5,6 +5,8 @@
  */
 package db;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -15,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -37,6 +40,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Product.findByRetailPrice", query = "SELECT p FROM Product p WHERE p.retailPrice = :retailPrice"),
     @NamedQuery(name = "Product.findByStatus", query = "SELECT p FROM Product p WHERE p.status = :status")})
 public class Product implements Serializable {
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,7 +79,9 @@ public class Product implements Serializable {
     }
 
     public void setId(Integer id) {
+        Integer oldId = this.id;
         this.id = id;
+        changeSupport.firePropertyChange("id", oldId, id);
     }
 
     public String getBarcode() {
@@ -82,7 +89,9 @@ public class Product implements Serializable {
     }
 
     public void setBarcode(String barcode) {
+        String oldBarcode = this.barcode;
         this.barcode = barcode;
+        changeSupport.firePropertyChange("barcode", oldBarcode, barcode);
     }
 
     public String getBrandId() {
@@ -90,7 +99,9 @@ public class Product implements Serializable {
     }
 
     public void setBrandId(String brandId) {
+        String oldBrandId = this.brandId;
         this.brandId = brandId;
+        changeSupport.firePropertyChange("brandId", oldBrandId, brandId);
     }
 
     public String getCatId() {
@@ -98,7 +109,9 @@ public class Product implements Serializable {
     }
 
     public void setCatId(String catId) {
+        String oldCatId = this.catId;
         this.catId = catId;
+        changeSupport.firePropertyChange("catId", oldCatId, catId);
     }
 
     public String getCostPrice() {
@@ -106,7 +119,9 @@ public class Product implements Serializable {
     }
 
     public void setCostPrice(String costPrice) {
+        String oldCostPrice = this.costPrice;
         this.costPrice = costPrice;
+        changeSupport.firePropertyChange("costPrice", oldCostPrice, costPrice);
     }
 
     public String getDescription() {
@@ -114,7 +129,9 @@ public class Product implements Serializable {
     }
 
     public void setDescription(String description) {
+        String oldDescription = this.description;
         this.description = description;
+        changeSupport.firePropertyChange("description", oldDescription, description);
     }
 
     public String getProduct() {
@@ -122,7 +139,9 @@ public class Product implements Serializable {
     }
 
     public void setProduct(String product) {
+        String oldProduct = this.product;
         this.product = product;
+        changeSupport.firePropertyChange("product", oldProduct, product);
     }
 
     public String getQty() {
@@ -130,7 +149,9 @@ public class Product implements Serializable {
     }
 
     public void setQty(String qty) {
+        String oldQty = this.qty;
         this.qty = qty;
+        changeSupport.firePropertyChange("qty", oldQty, qty);
     }
 
     public String getRetailPrice() {
@@ -138,7 +159,9 @@ public class Product implements Serializable {
     }
 
     public void setRetailPrice(String retailPrice) {
+        String oldRetailPrice = this.retailPrice;
         this.retailPrice = retailPrice;
+        changeSupport.firePropertyChange("retailPrice", oldRetailPrice, retailPrice);
     }
 
     public String getStatus() {
@@ -146,7 +169,9 @@ public class Product implements Serializable {
     }
 
     public void setStatus(String status) {
+        String oldStatus = this.status;
         this.status = status;
+        changeSupport.firePropertyChange("status", oldStatus, status);
     }
 
     @Override
@@ -172,6 +197,14 @@ public class Product implements Serializable {
     @Override
     public String toString() {
         return "db.Product[ id=" + id + " ]";
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
     
 }
