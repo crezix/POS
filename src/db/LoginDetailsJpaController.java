@@ -6,6 +6,7 @@
 package db;
 
 import db.exceptions.NonexistentEntityException;
+import db.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -30,13 +31,18 @@ public class LoginDetailsJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(LoginDetails loginDetails) {
+    public void create(LoginDetails loginDetails) throws PreexistingEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             em.persist(loginDetails);
             em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (findLoginDetails(loginDetails.getUsername()) != null) {
+                throw new PreexistingEntityException("LoginDetails " + loginDetails + " already exists.", ex);
+            }
+            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -54,7 +60,7 @@ public class LoginDetailsJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = loginDetails.getUserId();
+                String id = loginDetails.getUsername();
                 if (findLoginDetails(id) == null) {
                     throw new NonexistentEntityException("The loginDetails with id " + id + " no longer exists.");
                 }
@@ -67,7 +73,7 @@ public class LoginDetailsJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException {
+    public void destroy(String id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -75,7 +81,7 @@ public class LoginDetailsJpaController implements Serializable {
             LoginDetails loginDetails;
             try {
                 loginDetails = em.getReference(LoginDetails.class, id);
-                loginDetails.getUserId();
+                loginDetails.getUsername();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The loginDetails with id " + id + " no longer exists.", enfe);
             }
@@ -112,7 +118,7 @@ public class LoginDetailsJpaController implements Serializable {
         }
     }
 
-    public LoginDetails findLoginDetails(Integer id) {
+    public LoginDetails findLoginDetails(String id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(LoginDetails.class, id);
@@ -133,5 +139,6 @@ public class LoginDetailsJpaController implements Serializable {
             em.close();
         }
     }
+
     
 }
