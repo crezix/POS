@@ -133,7 +133,6 @@ public class ProductWindow extends javax.swing.JFrame {
         });
 
         jPanel1.setBackground(java.awt.Color.gray);
-        jPanel1.setPreferredSize(getPreferredSize());
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -214,12 +213,12 @@ public class ProductWindow extends javax.swing.JFrame {
 
         org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, categoryList, categoryCombo);
         bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, table, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.catId}"), categoryCombo, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, table, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.category}"), categoryCombo, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, brandList, brandCombo);
         bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, table, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.brandId}"), brandCombo, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, table, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.brand}"), brandCombo, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
         addButton.setText("Add");
@@ -248,7 +247,7 @@ public class ProductWindow extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(16, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -290,7 +289,7 @@ public class ProductWindow extends javax.swing.JFrame {
                             .addComponent(qtyBox)
                             .addComponent(barcodeBox)
                             .addComponent(statusCombo, 0, 250, Short.MAX_VALUE))))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -345,7 +344,7 @@ public class ProductWindow extends javax.swing.JFrame {
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, productList, table);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
         columnBinding.setColumnName("Id");
-        columnBinding.setColumnClass(Integer.class);
+        columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${product}"));
         columnBinding.setColumnName("Product");
@@ -355,11 +354,11 @@ public class ProductWindow extends javax.swing.JFrame {
         columnBinding.setColumnName("Description");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${catId}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${category}"));
         columnBinding.setColumnName("Category");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${brandId}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${brand}"));
         columnBinding.setColumnName("Brand");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
@@ -406,8 +405,7 @@ public class ProductWindow extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel1))
                             .addComponent(jScrollPane1)
                             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())))
@@ -449,7 +447,7 @@ public class ProductWindow extends javax.swing.JFrame {
 
         bindingGroup.bind();
 
-        pack();
+        setSize(new java.awt.Dimension(856, 677));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -459,49 +457,14 @@ public class ProductWindow extends javax.swing.JFrame {
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         this.dispose();
+        status =1;
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel6MouseClicked
-
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        String product = productBox.getText();
-        String description = descriptionBox.getText();
-        String category = categoryCombo.getSelectedItem().toString();
-        String brand = brandCombo.getItemAt(brandCombo.getSelectedIndex());
-        String costPrice = costPriceBox.getText();
-        String retailPrice = retailPriceBox.getText();
-        String qty = qtyBox.getText();
-        String barcode = barcodeBox.getText();
-        String status = statusCombo.getItemAt(statusCombo.getSelectedIndex());
-        
-        db.Product pr = new db.Product();
-        pr.setBarcode(barcode);
-        pr.setBrandId(brand);
-        pr.setCatId(category);
-        pr.setCostPrice(costPrice);
-        pr.setDescription(description);
-        pr.setProduct(product);
-        pr.setQty(qty);
-        pr.setRetailPrice(retailPrice);
-        pr.setStatus(status);
-        try{
-            pjc.create(pr);
-            message.setText("Product Added");
-            added.setVisible(true);
-        }
-        catch(Exception ex){
-            message.setText("Product Already Exist");
-            added.setVisible(true);
-        }
-        productList = productQuery.getResultList();
-        bindTable();
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addButtonActionPerformed
     public void bindTable(){
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, productList, table);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
         columnBinding.setColumnName("Id");
-        columnBinding.setColumnClass(Integer.class);
+        columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${product}"));
         columnBinding.setColumnName("Product");
@@ -511,12 +474,12 @@ public class ProductWindow extends javax.swing.JFrame {
         columnBinding.setColumnName("Description");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${catId}"));
-        columnBinding.setColumnName("Cat Id");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${category}"));
+        columnBinding.setColumnName("Category");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${brandId}"));
-        columnBinding.setColumnName("Brand Id");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${brand}"));
+        columnBinding.setColumnName("Brand");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${costPrice}"));
@@ -542,6 +505,48 @@ public class ProductWindow extends javax.swing.JFrame {
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
     }
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        
+        String product = productBox.getText();
+        String description = descriptionBox.getText();
+        String category = categoryCombo.getSelectedItem().toString();
+        String brand = brandCombo.getItemAt(brandCombo.getSelectedIndex());
+        String costPrice = costPriceBox.getText();
+        String retailPrice = retailPriceBox.getText();
+        String qty = qtyBox.getText();
+        String barcode = barcodeBox.getText();
+        String status = statusCombo.getItemAt(statusCombo.getSelectedIndex());
+        String id = brand.substring(0, 3)+product.split(" ")[0].substring(0,3)+product.split(" ")[1].substring(0,3);
+        
+        db.Product pr = new db.Product();
+        pr.setBarcode(barcode);
+        pr.setBrand(brand);
+        pr.setCategory(category);
+        pr.setCostPrice(costPrice);
+        pr.setDescription(description);
+        pr.setProduct(product);
+        pr.setQty(qty);
+        pr.setRetailPrice(retailPrice);
+        pr.setStatus(status);
+        pr.setId(id);
+        try{
+            pjc.create(pr);
+            message.setText("Product Added");
+            added.setVisible(true);
+            productList = productQuery.getResultList();
+            bindTable();
+            table.setVisible(false);
+            table.setVisible(true);
+        }
+        catch(Exception ex){
+            message.setText("Product Already Exist");
+            added.setVisible(true);
+        }
+        
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addButtonActionPerformed
+    
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
                // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
@@ -566,10 +571,10 @@ public class ProductWindow extends javax.swing.JFrame {
         String status = statusCombo.getItemAt(statusCombo.getSelectedIndex());
         
         String id=table.getValueAt(table.getSelectedRow(), 0).toString();
-        db.Product pr =new db.Product(Integer.parseInt(id));
+        db.Product pr =new db.Product(id);
         pr.setBarcode(barcode);
-        pr.setBrandId(brand);
-        pr.setCatId(category);
+        pr.setBrand(brand);
+        pr.setCategory(category);
         pr.setCostPrice(costPrice);
         pr.setDescription(description);
         pr.setProduct(product);
@@ -591,7 +596,7 @@ public class ProductWindow extends javax.swing.JFrame {
         String id=table.getValueAt(table.getSelectedRow(), 0).toString();
         String product = productBox.getText();
         try {
-            pjc.destroy(Integer.parseInt(id));
+            pjc.destroy(id);
             message.setText("Product "+product+" Deleted");
             added.setVisible(true);// TODO add your handling code here:
         } catch (NonexistentEntityException ex) {
@@ -705,6 +710,7 @@ public class ProductWindow extends javax.swing.JFrame {
     private javax.swing.JTable table;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
+    public int status=0;
     public EntityManagerFactory emf=Persistence.createEntityManagerFactory("POSPU");
     public db.ProductJpaController pjc = new db.ProductJpaController(emf);
 }

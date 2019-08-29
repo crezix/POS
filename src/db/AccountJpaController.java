@@ -20,9 +20,9 @@ import javax.persistence.criteria.Root;
  *
  * @author iresh
  */
-public class ProductJpaController implements Serializable {
+public class AccountJpaController implements Serializable {
 
-    public ProductJpaController(EntityManagerFactory emf) {
+    public AccountJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
@@ -31,16 +31,16 @@ public class ProductJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Product product) throws PreexistingEntityException, Exception {
+    public void create(Account account) throws PreexistingEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(product);
+            em.persist(account);
             em.getTransaction().commit();
         } catch (Exception ex) {
-            if (findProduct(product.getId()) != null) {
-                throw new PreexistingEntityException("Product " + product + " already exists.", ex);
+            if (findAccount(account.getStOrBill()) != null) {
+                throw new PreexistingEntityException("Account " + account + " already exists.", ex);
             }
             throw ex;
         } finally {
@@ -50,19 +50,19 @@ public class ProductJpaController implements Serializable {
         }
     }
 
-    public void edit(Product product) throws NonexistentEntityException, Exception {
+    public void edit(Account account) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            product = em.merge(product);
+            account = em.merge(account);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                String id = product.getId();
-                if (findProduct(id) == null) {
-                    throw new NonexistentEntityException("The product with id " + id + " no longer exists.");
+                String id = account.getStOrBill();
+                if (findAccount(id) == null) {
+                    throw new NonexistentEntityException("The account with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -78,14 +78,14 @@ public class ProductJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Product product;
+            Account account;
             try {
-                product = em.getReference(Product.class, id);
-                product.getId();
+                account = em.getReference(Account.class, id);
+                account.getStOrBill();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The product with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The account with id " + id + " no longer exists.", enfe);
             }
-            em.remove(product);
+            em.remove(account);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -94,19 +94,19 @@ public class ProductJpaController implements Serializable {
         }
     }
 
-    public List<Product> findProductEntities() {
-        return findProductEntities(true, -1, -1);
+    public List<Account> findAccountEntities() {
+        return findAccountEntities(true, -1, -1);
     }
 
-    public List<Product> findProductEntities(int maxResults, int firstResult) {
-        return findProductEntities(false, maxResults, firstResult);
+    public List<Account> findAccountEntities(int maxResults, int firstResult) {
+        return findAccountEntities(false, maxResults, firstResult);
     }
 
-    private List<Product> findProductEntities(boolean all, int maxResults, int firstResult) {
+    private List<Account> findAccountEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Product.class));
+            cq.select(cq.from(Account.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -118,20 +118,20 @@ public class ProductJpaController implements Serializable {
         }
     }
 
-    public Product findProduct(String id) {
+    public Account findAccount(String id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Product.class, id);
+            return em.find(Account.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getProductCount() {
+    public int getAccountCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Product> rt = cq.from(Product.class);
+            Root<Account> rt = cq.from(Account.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();

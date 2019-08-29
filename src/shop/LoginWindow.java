@@ -149,6 +149,7 @@ public class LoginWindow extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -158,9 +159,8 @@ public class LoginWindow extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String username = usernameBox.getText();
         String password = passwordBox.getText();
-        EntityManager em = emf.createEntityManager();
-        String pw = em.createQuery("SELECT l.password FROM LoginDetails l WHERE l.username = "+"'"+username+"'").getSingleResult().toString();
-        em.close();
+        db.LoginDetailsJpaController ljc = new db.LoginDetailsJpaController(emf);
+        String pw = ljc.findLoginDetails(username).getPassword();
         
         if (pw.equals(password)) {
             App.setVisible(true);
