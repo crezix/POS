@@ -48,38 +48,38 @@ public class ProductWindow extends javax.swing.JFrame {
         added = new javax.swing.JDialog();
         message = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
+        mainPanel = new javax.swing.JPanel();
+        mainMenuBtnLabel = new javax.swing.JLabel();
+        typeLabel = new javax.swing.JLabel();
+        addPanel = new javax.swing.JPanel();
+        productLabel = new javax.swing.JLabel();
+        descriptionLabel = new javax.swing.JLabel();
+        categoryLabel = new javax.swing.JLabel();
+        brandLabel = new javax.swing.JLabel();
+        costPriceLabel = new javax.swing.JLabel();
+        retailPriceLabel = new javax.swing.JLabel();
+        qtyLabel = new javax.swing.JLabel();
+        barcodeLabel = new javax.swing.JLabel();
+        statusLabel = new javax.swing.JLabel();
         productBox = new javax.swing.JTextField();
         barcodeBox = new javax.swing.JTextField();
         qtyBox = new javax.swing.JTextField();
         costPriceBox = new javax.swing.JTextField();
         retailPriceBox = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        descriptionScrollPane = new javax.swing.JScrollPane();
         descriptionBox = new javax.swing.JTextArea();
         statusCombo = new javax.swing.JComboBox<String>();
         categoryCombo = new javax.swing.JComboBox<String>();
         brandCombo = new javax.swing.JComboBox<String>();
         addButton = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        editButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        tableScrollPane = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        storeNameLabel = new javax.swing.JLabel();
+        firmNameLabel = new javax.swing.JLabel();
 
-        added.setLocation(new java.awt.Point(960, 545));
+        added.setLocationByPlatform(true);
         added.setResizable(false);
         added.setSize(new java.awt.Dimension(210, 100));
 
@@ -107,9 +107,9 @@ public class ProductWindow extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(message))
                     .addGroup(addedLayout.createSequentialGroup()
-                        .addContainerGap(129, Short.MAX_VALUE)
+                        .addContainerGap(149, Short.MAX_VALUE)
                         .addComponent(jButton1)))
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addContainerGap(150, Short.MAX_VALUE))
         );
         addedLayout.setVerticalGroup(
             addedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,8 +118,10 @@ public class ProductWindow extends javax.swing.JFrame {
                 .addComponent(message)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        added.getAccessibleContext().setAccessibleParent(this);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -132,50 +134,50 @@ public class ProductWindow extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(java.awt.Color.gray);
+        mainPanel.setBackground(java.awt.Color.gray);
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Main Menu");
-        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+        mainMenuBtnLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        mainMenuBtnLabel.setForeground(new java.awt.Color(255, 255, 255));
+        mainMenuBtnLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mainMenuBtnLabel.setText("Main Menu");
+        mainMenuBtnLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        mainMenuBtnLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel6MouseClicked(evt);
+                mainMenuBtnLabelMouseClicked(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel6MouseExited(evt);
+                mainMenuBtnLabelMouseExited(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel6MouseEntered(evt);
+                mainMenuBtnLabelMouseEntered(evt);
             }
         });
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel7.setForeground(java.awt.Color.white);
-        jLabel7.setText("Product");
+        typeLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        typeLabel.setForeground(java.awt.Color.white);
+        typeLabel.setText("Product");
 
-        jPanel2.setBackground(java.awt.Color.lightGray);
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel2.setName("product"); // NOI18N
+        addPanel.setBackground(java.awt.Color.lightGray);
+        addPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        addPanel.setName("product"); // NOI18N
 
-        jLabel9.setText("Product");
+        productLabel.setText("Product");
 
-        jLabel10.setText("Description");
+        descriptionLabel.setText("Description");
 
-        jLabel11.setText("Category");
+        categoryLabel.setText("Category");
 
-        jLabel12.setText("Brand");
+        brandLabel.setText("Brand");
 
-        jLabel13.setText("Cost Price");
+        costPriceLabel.setText("Cost Price");
 
-        jLabel14.setText("Retail Price");
+        retailPriceLabel.setText("Retail Price");
 
-        jLabel15.setText("Qty");
+        qtyLabel.setText("Qty");
 
-        jLabel16.setText("Barcode");
+        barcodeLabel.setText("Barcode");
 
-        jLabel17.setText("Status");
+        statusLabel.setText("Status");
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, table, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.product}"), productBox, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
@@ -204,7 +206,7 @@ public class ProductWindow extends javax.swing.JFrame {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, table, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.description}"), descriptionBox, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
-        jScrollPane2.setViewportView(descriptionBox);
+        descriptionScrollPane.setViewportView(descriptionBox);
 
         statusCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Active", "Inactive" }));
 
@@ -228,113 +230,113 @@ public class ProductWindow extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Edit");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        editButton.setText("Edit");
+        editButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                editButtonActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Delete");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                deleteButtonActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel11)
+        javax.swing.GroupLayout addPanelLayout = new javax.swing.GroupLayout(addPanel);
+        addPanel.setLayout(addPanelLayout);
+        addPanelLayout.setHorizontalGroup(
+            addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(productLabel)
+                    .addGroup(addPanelLayout.createSequentialGroup()
+                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(addPanelLayout.createSequentialGroup()
+                                .addComponent(categoryLabel)
                                 .addGap(34, 34, 34)
                                 .addComponent(categoryCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel12)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel10)
-                                        .addComponent(jLabel13))
+                            .addComponent(brandLabel)
+                            .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(addPanelLayout.createSequentialGroup()
+                                    .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(descriptionLabel)
+                                        .addComponent(costPriceLabel))
                                     .addGap(18, 18, 18)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(brandCombo, 0, 250, Short.MAX_VALUE)
                                         .addComponent(costPriceBox)))
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(descriptionScrollPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(productBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(24, 24, 24)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel15)
-                            .addComponent(jLabel14)
-                            .addComponent(jLabel16)
-                            .addComponent(jLabel17))))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(qtyLabel)
+                            .addComponent(retailPriceLabel)
+                            .addComponent(barcodeLabel)
+                            .addComponent(statusLabel))))
+                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(addPanelLayout.createSequentialGroup()
                         .addGap(194, 194, 194)
                         .addComponent(addButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)
+                        .addComponent(editButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(deleteButton))
+                    .addGroup(addPanelLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(retailPriceBox)
                             .addComponent(qtyBox)
                             .addComponent(barcodeBox)
                             .addComponent(statusCombo, 0, 250, Short.MAX_VALUE))))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        addPanelLayout.setVerticalGroup(
+            addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
+                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(addPanelLayout.createSequentialGroup()
+                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(productLabel)
                             .addComponent(productBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14))
+                            .addComponent(retailPriceLabel))
                         .addGap(8, 8, 8))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addPanelLayout.createSequentialGroup()
                         .addComponent(retailPriceBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(addPanelLayout.createSequentialGroup()
                         .addGap(2, 2, 2)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel15)
+                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(qtyLabel)
                             .addComponent(qtyBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(14, 14, 14)
                         .addComponent(barcodeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10))
+                    .addGroup(addPanelLayout.createSequentialGroup()
+                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(descriptionScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(descriptionLabel))
                         .addGap(8, 8, 8)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(categoryCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel16))
+                            .addComponent(categoryLabel)
+                            .addComponent(barcodeLabel))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel12)
+                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(brandLabel)
                             .addComponent(brandCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel17)
+                            .addComponent(statusLabel)
                             .addComponent(statusCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
+                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(costPriceLabel)
                     .addComponent(costPriceBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addButton)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(editButton)
+                    .addComponent(deleteButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -384,70 +386,70 @@ public class ProductWindow extends javax.swing.JFrame {
         columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
-        jScrollPane1.setViewportView(table);
+        tableScrollPane.setViewportView(table);
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel8.setForeground(java.awt.Color.white);
-        jLabel8.setText("Store Name");
+        storeNameLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        storeNameLabel.setForeground(java.awt.Color.white);
+        storeNameLabel.setText("Store Name");
 
-        jLabel1.setText("Powerd by Kode");
+        firmNameLabel.setText("Powerd by Kode");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(mainMenuBtnLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addComponent(typeLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel1))
-                            .addComponent(jScrollPane1)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(firmNameLabel))
+                            .addComponent(tableScrollPane)
+                            .addComponent(addPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())))
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel8)
+                .addComponent(storeNameLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel8)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(storeNameLabel)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGap(1, 1, 1)
-                        .addComponent(jLabel7))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(typeLabel))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1)))
+                        .addComponent(firmNameLabel)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(addPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE))
+                .addComponent(mainMenuBtnLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 856, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         bindingGroup.bind();
 
-        setSize(new java.awt.Dimension(856, 677));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -455,11 +457,11 @@ public class ProductWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_productBoxActionPerformed
 
-    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+    private void mainMenuBtnLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainMenuBtnLabelMouseClicked
         this.dispose();
         status =1;
         // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel6MouseClicked
+    }//GEN-LAST:event_mainMenuBtnLabelMouseClicked
     public void bindTable(){
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, productList, table);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
@@ -551,15 +553,15 @@ public class ProductWindow extends javax.swing.JFrame {
                // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
-    private void jLabel6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseEntered
-        jLabel6.setForeground(Color.yellow);        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel6MouseEntered
+    private void mainMenuBtnLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainMenuBtnLabelMouseEntered
+        mainMenuBtnLabel.setForeground(Color.yellow);        // TODO add your handling code here:
+    }//GEN-LAST:event_mainMenuBtnLabelMouseEntered
 
-    private void jLabel6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseExited
-        jLabel6.setForeground(Color.white);  // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel6MouseExited
+    private void mainMenuBtnLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainMenuBtnLabelMouseExited
+        mainMenuBtnLabel.setForeground(Color.white);  // TODO add your handling code here:
+    }//GEN-LAST:event_mainMenuBtnLabelMouseExited
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         String product = productBox.getText();
         String description = descriptionBox.getText();
         String category = categoryCombo.getSelectedItem().toString();
@@ -570,8 +572,10 @@ public class ProductWindow extends javax.swing.JFrame {
         String barcode = barcodeBox.getText();
         String status = statusCombo.getItemAt(statusCombo.getSelectedIndex());
         
+        
         String id=table.getValueAt(table.getSelectedRow(), 0).toString();
         db.Product pr =new db.Product(id);
+        id = brand.substring(0, 3)+product.split(" ")[0].substring(0,3)+product.split(" ")[1].substring(0,3);
         pr.setBarcode(barcode);
         pr.setBrand(brand);
         pr.setCategory(category);
@@ -581,6 +585,7 @@ public class ProductWindow extends javax.swing.JFrame {
         pr.setQty(qty);
         pr.setRetailPrice(retailPrice);
         pr.setStatus(status);
+        //pr.setId(id);
         try {
             pjc.edit(pr);
             message.setText("Product "+product+" Edited");
@@ -590,9 +595,9 @@ public class ProductWindow extends javax.swing.JFrame {
         }
         productList = productQuery.getResultList();
         bindTable();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_editButtonActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         String id=table.getValueAt(table.getSelectedRow(), 0).toString();
         String product = productBox.getText();
         try {
@@ -605,7 +610,7 @@ public class ProductWindow extends javax.swing.JFrame {
         productList = productQuery.getResultList();
         bindTable();
         
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         added.dispose();        // TODO add your handling code here:
@@ -670,44 +675,44 @@ public class ProductWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.persistence.EntityManager POSPUEntityManager;
     public javax.swing.JButton addButton;
+    private javax.swing.JPanel addPanel;
     private javax.swing.JDialog added;
     private javax.swing.JTextField barcodeBox;
+    private javax.swing.JLabel barcodeLabel;
     private javax.swing.JComboBox<String> brandCombo;
+    private javax.swing.JLabel brandLabel;
     private java.util.List<db.Brand> brandList;
     private javax.persistence.Query brandQuery;
     private javax.swing.JComboBox<String> categoryCombo;
+    private javax.swing.JLabel categoryLabel;
     private java.util.List<db.Category> categoryList;
     private javax.persistence.Query categoryQuery;
     private javax.swing.JTextField costPriceBox;
+    private javax.swing.JLabel costPriceLabel;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JTextArea descriptionBox;
+    private javax.swing.JLabel descriptionLabel;
+    private javax.swing.JScrollPane descriptionScrollPane;
+    private javax.swing.JButton editButton;
+    private javax.swing.JLabel firmNameLabel;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel mainMenuBtnLabel;
+    private javax.swing.JPanel mainPanel;
     public javax.swing.JLabel message;
     private javax.swing.JTextField productBox;
+    private javax.swing.JLabel productLabel;
     private java.util.List<db.Product> productList;
     private javax.persistence.Query productQuery;
     private javax.swing.JTextField qtyBox;
+    private javax.swing.JLabel qtyLabel;
     private javax.swing.JTextField retailPriceBox;
+    private javax.swing.JLabel retailPriceLabel;
     private javax.swing.JComboBox<String> statusCombo;
+    private javax.swing.JLabel statusLabel;
+    private javax.swing.JLabel storeNameLabel;
     private javax.swing.JTable table;
+    private javax.swing.JScrollPane tableScrollPane;
+    private javax.swing.JLabel typeLabel;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
     public int status=0;

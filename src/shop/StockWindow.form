@@ -7,27 +7,6 @@
         <Property name="persistenceUnit" type="java.lang.String" value="POSPU"/>
       </Properties>
     </Component>
-    <Component class="javax.persistence.Query" name="brandQuery">
-      <Properties>
-        <Property name="query" type="java.lang.String" value="SELECT b FROM Brand b"/>
-        <Property name="entityManager" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$EMProperty$EntityManagerEditor">
-          <ComponentRef name="POSPUEntityManager"/>
-        </Property>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="java.beans.Beans.isDesignTime() ? null : POSPUEntityManager.createQuery(&quot;SELECT b.brand FROM Brand b&quot;)"/>
-      </AuxValues>
-    </Component>
-    <Component class="java.util.List" name="brandList">
-      <Properties>
-        <Property name="query" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$QueryBeanProperty$QueryEditor">
-          <ComponentRef name="brandQuery"/>
-        </Property>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;db.Brand&gt;"/>
-      </AuxValues>
-    </Component>
     <Component class="javax.persistence.Query" name="productQuery">
       <Properties>
         <Property name="query" type="java.lang.String" value="SELECT p FROM Product p"/>
@@ -49,12 +28,36 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;db.Product&gt;"/>
       </AuxValues>
     </Component>
+    <Component class="javax.persistence.Query" name="brandQuery">
+      <Properties>
+        <Property name="query" type="java.lang.String" value="SELECT p FROM Product p"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="java.beans.Beans.isDesignTime() ? null : POSPUEntityManager.createQuery(&quot;SELECT p.brand FROM Product p&quot;)"/>
+      </AuxValues>
+    </Component>
+    <Component class="java.util.List" name="brandList">
+      <Properties>
+        <Property name="query" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$QueryBeanProperty$QueryEditor">
+          <ComponentRef name="brandQuery"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;db.Brand&gt;"/>
+      </AuxValues>
+    </Component>
     <Component class="javax.swing.JOptionPane" name="added">
       <Properties>
         <Property name="message" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="&quot;Stock added!&quot;" type="code"/>
         </Property>
       </Properties>
+    </Component>
+    <Component class="java.util.List" name="prList">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ArrayList()"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="for(int i = 0; i&lt;productList.size(); i++){&#xa;    String prd = brandList.get(i)+&quot;-&quot;+productList.get(i);&#xa;    prList.add(i,prd);&#xa;}"/>
+      </AuxValues>
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -225,8 +228,11 @@
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <BindingProperties>
-                <BindingProperty name="elements" source="productList" target="productCombo" targetPath="elements" updateStrategy="0" immediately="false"/>
+                <BindingProperty name="elements" source="prList" target="productCombo" targetPath="elements" updateStrategy="0" immediately="false"/>
               </BindingProperties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="productComboItemStateChanged"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="qtyLabel">
               <Properties>

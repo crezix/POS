@@ -9,13 +9,13 @@
     </Component>
     <Component class="javax.persistence.Query" name="brandQuery">
       <Properties>
-        <Property name="query" type="java.lang.String" value="SELECT b FROM Brand b"/>
+        <Property name="query" type="java.lang.String" value="SELECT p FROM Product p"/>
         <Property name="entityManager" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$EMProperty$EntityManagerEditor">
           <ComponentRef name="POSPUEntityManager"/>
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="java.beans.Beans.isDesignTime() ? null : POSPUEntityManager.createQuery(&quot;SELECT b.brand FROM Brand b&quot;)"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="java.beans.Beans.isDesignTime() ? null : POSPUEntityManager.createQuery(&quot;SELECT p.brand FROM Product p&quot;)"/>
       </AuxValues>
     </Component>
     <Component class="java.util.List" name="brandList">
@@ -56,6 +56,12 @@
         </Property>
       </Properties>
     </Component>
+    <Component class="java.util.List" name="prList">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ArrayList()"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="for(int i = 0; i&lt;productList.size(); i++){&#xa;    String prd = brandList.get(i)+&quot;-&quot;+productList.get(i);&#xa;    prList.add(i,prd);&#xa;}"/>
+      </AuxValues>
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
@@ -79,17 +85,17 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="1" max="32767" attributes="0"/>
+          <Component id="mainPanel" alignment="1" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Component id="mainPanel" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="jPanel1">
+    <Container class="javax.swing.JPanel" name="mainPanel">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="80" green="80" id="gray" palette="1" red="80" type="palette"/>
@@ -102,20 +108,20 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane2" max="32767" attributes="0"/>
+                      <Component id="tableScrollPane" max="32767" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Component id="deleteButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="addStockButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="addBillButton" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
-                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <Component id="totalLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                           <Component id="totalBox" min="-2" pref="117" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                          <Component id="addPanel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="addButton" min="-2" pref="61" max="-2" attributes="0"/>
                       </Group>
@@ -129,38 +135,37 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                      <Component id="addPanel" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="addButton" min="-2" pref="57" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" min="-2" pref="172" max="-2" attributes="0"/>
+                  <Component id="tableScrollPane" min="-2" pref="172" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="deleteButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="addStockButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="addBillButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="totalLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="totalBox" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="160" max="32767" attributes="0"/>
+                  <EmptySpace pref="166" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="jPanel2">
+        <Container class="javax.swing.JPanel" name="addPanel">
 
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="newStockButton" pref="108" max="32767" attributes="0"/>
+                      <Component id="newBillButton" pref="108" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="customProductBox" min="-2" pref="272" max="-2" attributes="0"/>
@@ -176,8 +181,8 @@
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="costPriceBox" min="-2" pref="88" max="-2" attributes="0"/>
-                                  <Component id="costPriceLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="retailPriceBox" min="-2" pref="88" max="-2" attributes="0"/>
+                                  <Component id="retailPriceLabel" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -192,21 +197,21 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="productLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="costPriceLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="retailPriceLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="qtyLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="productCombo" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="qtyBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="costPriceBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="retailPriceBox" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="customProductBox" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="newStockButton" max="32767" attributes="0"/>
+                              <Component id="newBillButton" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -225,17 +230,20 @@
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <BindingProperties>
-                <BindingProperty name="elements" source="productList" target="productCombo" targetPath="elements" updateStrategy="0" immediately="false"/>
+                <BindingProperty name="elements" source="prList" target="productCombo" targetPath="elements" updateStrategy="0" immediately="false"/>
               </BindingProperties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="productComboItemStateChanged"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="qtyLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Quantity"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="costPriceLabel">
+            <Component class="javax.swing.JLabel" name="retailPriceLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Cost price"/>
+                <Property name="text" type="java.lang.String" value="Retail Price"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="qtyBox">
@@ -244,7 +252,7 @@
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="costPriceBox">
+            <Component class="javax.swing.JTextField" name="retailPriceBox">
               <Properties>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
@@ -254,12 +262,12 @@
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="newStockButton">
+            <Component class="javax.swing.JButton" name="newBillButton">
               <Properties>
-                <Property name="text" type="java.lang.String" value="New Stock"/>
+                <Property name="text" type="java.lang.String" value="New Bill"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newStockButtonActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newBillButtonActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -273,7 +281,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addButtonActionPerformed"/>
           </Events>
         </Component>
-        <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+        <Container class="javax.swing.JScrollPane" name="tableScrollPane">
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
           </AuxValues>
@@ -286,7 +294,7 @@
                   <Table columnCount="4" rowCount="0">
                     <Column editable="true" title="Product" type="java.lang.String"/>
                     <Column editable="true" title="Quantity" type="java.lang.String"/>
-                    <Column editable="true" title="Cost Price" type="java.lang.String"/>
+                    <Column editable="true" title="Retail Price" type="java.lang.String"/>
                     <Column editable="true" title="Cost" type="java.lang.Double"/>
                   </Table>
                 </Property>
@@ -330,21 +338,21 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="addStockButton">
+        <Component class="javax.swing.JButton" name="addBillButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Add Stock"/>
+            <Property name="text" type="java.lang.String" value="Add Bill"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addStockButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addBillButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel1">
+        <Component class="javax.swing.JLabel" name="totalLabel">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Total Cost : Rs."/>
+            <Property name="text" type="java.lang.String" value="Total Bill : Rs."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="totalBox">

@@ -5,6 +5,7 @@
  */
 package shop;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,11 +38,12 @@ public class StockWindow extends javax.swing.JFrame {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         POSPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("POSPU").createEntityManager();
-        brandQuery = java.beans.Beans.isDesignTime() ? null : POSPUEntityManager.createQuery("SELECT b.brand FROM Brand b");
-        brandList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : brandQuery.getResultList();
         productQuery = java.beans.Beans.isDesignTime() ? null : POSPUEntityManager.createQuery("SELECT p.product FROM Product p");
         productList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : productQuery.getResultList();
+        brandQuery = java.beans.Beans.isDesignTime() ? null : POSPUEntityManager.createQuery("SELECT p.brand FROM Product p");
+        brandList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : brandQuery.getResultList();
         added = new javax.swing.JOptionPane();
+        prList = new ArrayList();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         productLabel = new javax.swing.JLabel();
@@ -62,6 +64,11 @@ public class StockWindow extends javax.swing.JFrame {
 
         added.setMessage("Stock added!");
 
+        for(int i = 0; i<productList.size(); i++){
+            String prd = brandList.get(i)+"-"+productList.get(i);
+            prList.add(i,prd);
+        }
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(java.awt.Color.gray);
@@ -70,8 +77,14 @@ public class StockWindow extends javax.swing.JFrame {
 
         productCombo.setEnabled(false);
 
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, productList, productCombo);
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, prList, productCombo);
         bindingGroup.addBinding(jComboBoxBinding);
+
+        productCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                productComboItemStateChanged(evt);
+            }
+        });
 
         qtyLabel.setText("Quantity");
 
@@ -246,22 +259,6 @@ public class StockWindow extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        String product;
-        if (customProductBox.getText().isEmpty()){
-        product = productCombo.getItemAt(productCombo.getSelectedIndex()).toString();
-        }
-        else{
-            product = customProductBox.getText();
-        }
-        String costPrice = costPriceBox.getText();
-        String qty = qtyBox.getText();
-        double cost = (Double.parseDouble(qty)*Double.parseDouble(costPrice));
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.addRow(new Object[]{product,qty,costPrice,cost});
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addButtonActionPerformed
-
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.removeRow(table.getSelectedRow());// TODO add your handling code here:
@@ -278,7 +275,9 @@ public class StockWindow extends javax.swing.JFrame {
         totalBox.setText(sumStr);// TODO add your handling code here:
         
         String stockMonth = java.time.LocalDateTime.now().getMonth().toString();//.split("=")[1].split("T")[0]+"S";
-        String stockName = stockMonth.substring(0, 3)+"s"+java.time.LocalDateTime.now().getDayOfMonth()+java.time.LocalDateTime.now().getHour()+java.time.LocalDateTime.now().getMinute();
+        String stockName =  stockMonth.substring(0, 3)+"s"+java.time.LocalDateTime.now().getDayOfMonth()
+                            +java.time.LocalDateTime.now().getHour()+java.time.LocalDateTime.now().getMinute()
+                            +java.time.LocalDateTime.now().getSecond();
         db.Account acc = new db.Account(stockName);
         acc.setCost(sum);
         try {
@@ -306,7 +305,6 @@ public class StockWindow extends javax.swing.JFrame {
         qtyBox.setEnabled(true);
         qtyBox.setText(null);
         costPriceBox.setEnabled(true);
-        costPriceBox.setText(null);
         addButton.setEnabled(true);
         totalBox.setText(null);
         DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -315,6 +313,26 @@ public class StockWindow extends javax.swing.JFrame {
         //System.out.print(ajc.findAccountEntities().get(ajc.getAccountCount()-1).toString().split("=")[1].split("T")[0]);
         //ajc.findAccountEntities();// TODO add your handling code here:
     }//GEN-LAST:event_newStockButtonActionPerformed
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        String product;
+        if (customProductBox.getText().isEmpty()){
+            product = productCombo.getItemAt(productCombo.getSelectedIndex()).toString();
+        }
+        else{
+            product = customProductBox.getText();
+        }
+        String costPrice = costPriceBox.getText();
+        String qty = qtyBox.getText();
+        double cost = (Double.parseDouble(qty)*Double.parseDouble(costPrice));
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.addRow(new Object[]{product,qty,costPrice,cost});
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    private void productComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_productComboItemStateChanged
+        costPriceBox.setText(pjc.findProductEntities().get(productCombo.getSelectedIndex()).getCostPrice());        // TODO add your handling code here:
+    }//GEN-LAST:event_productComboItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -367,6 +385,7 @@ public class StockWindow extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton newStockButton;
+    private java.util.List prList;
     private javax.swing.JComboBox productCombo;
     private javax.swing.JLabel productLabel;
     private java.util.List<db.Product> productList;
@@ -380,4 +399,5 @@ public class StockWindow extends javax.swing.JFrame {
     //private String stockNumber;
     EntityManagerFactory emf  = Persistence.createEntityManagerFactory("POSPU");
     private db.AccountJpaController ajc = new db.AccountJpaController(emf);
+    private db.ProductJpaController pjc = new db.ProductJpaController(emf);
 }
