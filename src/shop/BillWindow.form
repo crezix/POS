@@ -7,6 +7,48 @@
         <Property name="persistenceUnit" type="java.lang.String" value="POSPU"/>
       </Properties>
     </Component>
+    <Component class="javax.persistence.Query" name="prCodeQuery">
+      <Properties>
+        <Property name="query" type="java.lang.String" value="SELECT p FROM Product p"/>
+        <Property name="entityManager" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$EMProperty$EntityManagerEditor">
+          <ComponentRef name="POSPUEntityManager"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="java.beans.Beans.isDesignTime() ? null : POSPUEntityManager.createQuery(&quot;SELECT p.id FROM Product p&quot;)"/>
+      </AuxValues>
+    </Component>
+    <Component class="java.util.List" name="prCodeList">
+      <Properties>
+        <Property name="query" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$QueryBeanProperty$QueryEditor">
+          <ComponentRef name="prCodeQuery"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;db.Brand&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.persistence.Query" name="qtyQuery">
+      <Properties>
+        <Property name="query" type="java.lang.String" value="SELECT p FROM Product p"/>
+        <Property name="entityManager" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$EMProperty$EntityManagerEditor">
+          <ComponentRef name="POSPUEntityManager"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="java.beans.Beans.isDesignTime() ? null : POSPUEntityManager.createQuery(&quot;SELECT p.qty FROM Product p&quot;)"/>
+      </AuxValues>
+    </Component>
+    <Component class="java.util.List" name="qtyList">
+      <Properties>
+        <Property name="query" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$QueryBeanProperty$QueryEditor">
+          <ComponentRef name="qtyQuery"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;db.Brand&gt;"/>
+      </AuxValues>
+    </Component>
     <Component class="javax.persistence.Query" name="brandQuery">
       <Properties>
         <Property name="query" type="java.lang.String" value="SELECT p FROM Product p"/>
@@ -59,7 +101,7 @@
     <Component class="java.util.List" name="prList">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ArrayList()"/>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="for(int i = 0; i&lt;productList.size(); i++){&#xa;    String prd = brandList.get(i)+&quot;-&quot;+productList.get(i);&#xa;    prList.add(i,prd);&#xa;}"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="for(int i = 0; i&lt;productList.size(); i++){&#xa;    String prd = prCodeList.get(i)+&quot; - &quot;+productList.get(i)+&quot; (&quot;+qtyList.get(i)+&quot;) - &quot;+brandList.get(i);&#xa;    prList.add(i,prd);&#xa;}"/>
       </AuxValues>
     </Component>
   </NonVisualComponents>
@@ -172,9 +214,9 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="productLabel" min="-2" max="-2" attributes="0"/>
-                                  <Component id="productCombo" min="-2" pref="272" max="-2" attributes="0"/>
+                                  <Component id="productCombo" min="-2" pref="377" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="qtyBox" min="-2" pref="87" max="-2" attributes="0"/>
                                   <Component id="qtyLabel" min="-2" max="-2" attributes="0"/>

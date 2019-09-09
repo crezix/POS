@@ -38,6 +38,10 @@ public class BillWindow extends javax.swing.JFrame {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         POSPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("POSPU").createEntityManager();
+        prCodeQuery = java.beans.Beans.isDesignTime() ? null : POSPUEntityManager.createQuery("SELECT p.id FROM Product p");
+        prCodeList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : prCodeQuery.getResultList();
+        qtyQuery = java.beans.Beans.isDesignTime() ? null : POSPUEntityManager.createQuery("SELECT p.qty FROM Product p");
+        qtyList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : qtyQuery.getResultList();
         brandQuery = java.beans.Beans.isDesignTime() ? null : POSPUEntityManager.createQuery("SELECT p.brand FROM Product p");
         brandList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : brandQuery.getResultList();
         productQuery = java.beans.Beans.isDesignTime() ? null : POSPUEntityManager.createQuery("SELECT p.product FROM Product p");
@@ -65,7 +69,7 @@ public class BillWindow extends javax.swing.JFrame {
         added.setMessage("Stock added!");
 
         for(int i = 0; i<productList.size(); i++){
-            String prd = brandList.get(i)+"-"+productList.get(i);
+            String prd = prCodeList.get(i)+" - "+productList.get(i)+" ("+qtyList.get(i)+") - "+brandList.get(i);
             prList.add(i,prd);
         }
 
@@ -117,8 +121,8 @@ public class BillWindow extends javax.swing.JFrame {
                     .addGroup(addPanelLayout.createSequentialGroup()
                         .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(productLabel)
-                            .addComponent(productCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                            .addComponent(productCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(qtyBox, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(qtyLabel))
@@ -257,45 +261,48 @@ public class BillWindow extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        String product;
+    private void addProduct(){
+        String product,costPrice,qty;
+        double cost;
+        
         if (customProductBox.getText().isEmpty()){
         product = productCombo.getItemAt(productCombo.getSelectedIndex()).toString();
         }
         else{
             product = customProductBox.getText();
         }
-        String costPrice = retailPriceBox.getText();
-        String qty = qtyBox.getText();
-        double cost = (Double.parseDouble(qty)*Double.parseDouble(costPrice));
+        costPrice = retailPriceBox.getText();
+        qty = qtyBox.getText();
+        cost = (Double.parseDouble(qty)*Double.parseDouble(costPrice));
+        
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.addRow(new Object[]{product,qty,costPrice,cost});
-        
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addButtonActionPerformed
-
-    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+    }
+    
+    private void deleteProduct(){
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.removeRow(table.getSelectedRow());// TODO add your handling code here:
-    }//GEN-LAST:event_deleteButtonActionPerformed
-
-    private void addBillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBillButtonActionPerformed
+        model.removeRow(table.getSelectedRow());
+    }
+    
+    private void addBill(){
+        String sumStr, billMonth, billName;
         double sum=0;
         int i= 0;
+        
+        billMonth = java.time.LocalDateTime.now().getMonth().toString();//.split("=")[1].split("T")[0]+"S";
+        billName =   billMonth.substring(0, 3)+"b"+java.time.LocalDateTime.now().getDayOfMonth()
+                     +java.time.LocalDateTime.now().getHour()+java.time.LocalDateTime.now().getMinute()
+                     +java.time.LocalDateTime.now().getSecond();
+        db.Account acc = new db.Account(billName);
+        
         while(i<table.getRowCount()){
             sum= sum+Double.parseDouble(table.getValueAt(i, 3).toString());
             i=i+1;
         }
-        String sumStr = ""+sum+"";
-        totalBox.setText(sumStr);// TODO add your handling code here:
+        sumStr = ""+sum+"";
+        totalBox.setText(sumStr);
         
-        String billMonth = java.time.LocalDateTime.now().getMonth().toString();//.split("=")[1].split("T")[0]+"S";
-        String billName =   billMonth.substring(0, 3)+"b"+java.time.LocalDateTime.now().getDayOfMonth()
-                            +java.time.LocalDateTime.now().getHour()+java.time.LocalDateTime.now().getMinute()
-                            +java.time.LocalDateTime.now().getSecond();
-        db.Account acc = new db.Account(billName);
+        
         acc.setPrice(sum);
         try {
             ajc.create(acc);
@@ -309,10 +316,9 @@ public class BillWindow extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(BillWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    }//GEN-LAST:event_addBillButtonActionPerformed
-
-    private void newBillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newBillButtonActionPerformed
+    }
+    
+    private void newBill(){
         deleteButton.setEnabled(true);
         addBillButton.setEnabled(true);
         productCombo.setEnabled(true);
@@ -322,14 +328,53 @@ public class BillWindow extends javax.swing.JFrame {
         qtyBox.setEnabled(true);
         qtyBox.setText(null);
         retailPriceBox.setEnabled(true);
-        //retailPriceBox.setText(null);
         addButton.setEnabled(true);
         totalBox.setText(null);
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
-        //ajc.getAccountCount();
-        //System.out.print(ajc.findAccountEntities().get(ajc.getAccountCount()-1).toString().split("=")[1].split("T")[0]);
-        //ajc.findAccountEntities();// TODO add your handling code here:
+    }
+    
+    private void reduceQty(){
+        double qty,qtyDb,qtyFinal;
+        int i = 0;
+        int rowCount = table.getRowCount();
+        while (i<rowCount){
+            qty = Double.parseDouble(table.getValueAt(i, 3).toString());
+            String prName = table.getValueAt(i, 0).toString().split(" ")[0];
+            qtyDb = Double.parseDouble(pjc.findProduct(prName).getQty());
+            qtyFinal = qtyDb-qty;
+            
+            db.Product pr = new db.Product(prName);
+            pr.setQty(String.valueOf(qtyFinal));
+            pr.setBarcode(pr.getBarcode());
+            pr.setBrand(pr.getBrand());
+            pr.setCategory(pr.getCategory());
+            pr.setDescription(pr.getDescription());
+            
+            try {
+                pjc.edit(pr);
+            } catch (Exception ex) {
+                Logger.getLogger(BillWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            i++;
+        }
+    }
+    
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        addProduct();
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        deleteProduct();
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void addBillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBillButtonActionPerformed
+        addBill();
+        //reduceQty();
+    }//GEN-LAST:event_addBillButtonActionPerformed
+
+    private void newBillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newBillButtonActionPerformed
+        newBill();
     }//GEN-LAST:event_newBillButtonActionPerformed
 
     private void productComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_productComboItemStateChanged
@@ -384,6 +429,8 @@ public class BillWindow extends javax.swing.JFrame {
     private javax.swing.JButton deleteButton;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JButton newBillButton;
+    private java.util.List<db.Brand> prCodeList;
+    private javax.persistence.Query prCodeQuery;
     private java.util.List prList;
     private javax.swing.JComboBox productCombo;
     private javax.swing.JLabel productLabel;
@@ -391,6 +438,8 @@ public class BillWindow extends javax.swing.JFrame {
     private javax.persistence.Query productQuery;
     private javax.swing.JTextField qtyBox;
     private javax.swing.JLabel qtyLabel;
+    private java.util.List<db.Brand> qtyList;
+    private javax.persistence.Query qtyQuery;
     private javax.swing.JTextField retailPriceBox;
     private javax.swing.JLabel retailPriceLabel;
     private javax.swing.JTable table;
