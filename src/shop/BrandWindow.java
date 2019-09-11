@@ -19,12 +19,12 @@ import org.jdesktop.beansbinding.AutoBinding;
  *
  * @author aruna
  */
-public class CategoryWindow extends javax.swing.JFrame {
+public class BrandWindow extends javax.swing.JFrame {
 
     /**
      * Creates new form Catagory
      */
-    public CategoryWindow() {
+    public BrandWindow() {
         initComponents();
     }
 
@@ -39,14 +39,14 @@ public class CategoryWindow extends javax.swing.JFrame {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         POSPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("POSPU").createEntityManager();
-        categoryQuery = java.beans.Beans.isDesignTime() ? null : POSPUEntityManager.createQuery("SELECT c FROM Category c");
-        categoryList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : categoryQuery.getResultList();
+        brandQuery = java.beans.Beans.isDesignTime() ? null : POSPUEntityManager.createQuery("SELECT b FROM Brand b");
+        brandList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : brandQuery.getResultList();
         mainPanel = new javax.swing.JPanel();
         mainMenuBtnLabel = new javax.swing.JLabel();
         typeLabel = new javax.swing.JLabel();
         addPanel = new javax.swing.JPanel();
         productLabel = new javax.swing.JLabel();
-        categoryBox = new javax.swing.JTextField();
+        brandBox = new javax.swing.JTextField();
         addButton = new javax.swing.JButton();
         editButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
@@ -86,20 +86,20 @@ public class CategoryWindow extends javax.swing.JFrame {
 
         typeLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         typeLabel.setForeground(java.awt.Color.white);
-        typeLabel.setText("Category");
+        typeLabel.setText("Brand");
 
         addPanel.setBackground(java.awt.Color.lightGray);
         addPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         addPanel.setName("product"); // NOI18N
 
-        productLabel.setText("Category");
+        productLabel.setText("Brand");
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, table, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.category}"), categoryBox, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, table, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.brand}"), brandBox, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
-        categoryBox.addActionListener(new java.awt.event.ActionListener() {
+        brandBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                categoryBoxActionPerformed(evt);
+                brandBoxActionPerformed(evt);
             }
         });
 
@@ -140,7 +140,7 @@ public class CategoryWindow extends javax.swing.JFrame {
                     .addGroup(addPanelLayout.createSequentialGroup()
                         .addComponent(productLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(categoryBox, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(brandBox, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         addPanelLayout.setVerticalGroup(
@@ -149,7 +149,7 @@ public class CategoryWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(productLabel)
-                    .addComponent(categoryBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(brandBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addButton)
@@ -161,12 +161,12 @@ public class CategoryWindow extends javax.swing.JFrame {
         table.setBackground(java.awt.Color.lightGray);
         table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, categoryList, table);
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, brandList, table);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
         columnBinding.setColumnName("Id");
         columnBinding.setColumnClass(Integer.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${category}"));
-        columnBinding.setColumnName("Category");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${brand}"));
+        columnBinding.setColumnName("Brand");
         columnBinding.setColumnClass(String.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
@@ -238,54 +238,54 @@ public class CategoryWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bindTable(){
-        categoryQuery = java.beans.Beans.isDesignTime() ? null : POSPUEntityManager.createQuery("SELECT c FROM Category c");
-        categoryList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : categoryQuery.getResultList();
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, categoryList, table);
+        brandQuery = java.beans.Beans.isDesignTime() ? null : POSPUEntityManager.createQuery("SELECT b FROM Brand b");
+        brandList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : brandQuery.getResultList();
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, brandList, table);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
         columnBinding.setColumnName("Id");
         columnBinding.setColumnClass(Integer.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${category}"));
-        columnBinding.setColumnName("Category");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${brand}"));
+        columnBinding.setColumnName("Brand");
         columnBinding.setColumnClass(String.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
     }
     
-    private void addCategory(){
-        String ct;
-        db.Category category = new db.Category();
+    private void addBrand(){
+        String br;
+        db.Brand brand = new db.Brand();
         
-        ct = categoryBox.getText();
-        category.setCategory(ct);
+        br = brandBox.getText();
+        brand.setBrand(br);
         
-        cjc.create(category);
+        bjc.create(brand);
         
     }
     
-    private void editCategory(){
-        String ct;
+    private void editBrand(){
+        String br;
         int id;
         
         id = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
-        db.Category category = new db.Category(id);
-        ct = categoryBox.getText();
-        category.setCategory(ct);
+        db.Brand brand = new db.Brand(id);
+        br = brandBox.getText();
+        brand.setBrand(br);
         
         try {
-            cjc.edit(category);
+            bjc.edit(brand);
         } catch (Exception ex) {
-            Logger.getLogger(CategoryWindow.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BrandWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    private void deleteCategory(){
+    private void deleteBrand(){
         int id;
         
         id = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
         try {
-            cjc.destroy(id);
+            bjc.destroy(id);
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(CategoryWindow.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BrandWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -307,25 +307,25 @@ public class CategoryWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_mainMenuBtnLabelMouseExited
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        deleteCategory();
+        deleteBrand();
         bindTable();
 
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
-        editCategory();
+        editBrand();
         bindTable();
     }//GEN-LAST:event_editButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        addCategory();
+        addBrand();
         bindTable();
         // TODO add your handling code here:
     }//GEN-LAST:event_addButtonActionPerformed
 
-    private void categoryBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryBoxActionPerformed
+    private void brandBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brandBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_categoryBoxActionPerformed
+    }//GEN-LAST:event_brandBoxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -344,46 +344,14 @@ public class CategoryWindow extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CategoryWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BrandWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CategoryWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BrandWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CategoryWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BrandWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CategoryWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BrandWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -420,7 +388,7 @@ public class CategoryWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CategoryWindow().setVisible(true);
+                new BrandWindow().setVisible(true);
                 
             }
         });
@@ -428,11 +396,11 @@ public class CategoryWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.persistence.EntityManager POSPUEntityManager;
-    public javax.swing.JButton addButton;
+    private javax.swing.JButton addButton;
     private javax.swing.JPanel addPanel;
-    private javax.swing.JTextField categoryBox;
-    private java.util.List<db.Category> categoryList;
-    private javax.persistence.Query categoryQuery;
+    private javax.swing.JTextField brandBox;
+    private java.util.List<db.Brand> brandList;
+    private javax.persistence.Query brandQuery;
     private javax.swing.JButton deleteButton;
     private javax.swing.JButton editButton;
     private javax.swing.JLabel firmNameLabel;
@@ -446,5 +414,5 @@ public class CategoryWindow extends javax.swing.JFrame {
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
     public EntityManagerFactory emf=Persistence.createEntityManagerFactory("POSPU");
-    public db.CategoryJpaController cjc = new db.CategoryJpaController(emf);
+    public db.BrandJpaController bjc = new db.BrandJpaController(emf);
 }

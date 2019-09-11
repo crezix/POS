@@ -7,7 +7,6 @@ package shop;
 
 import db.exceptions.NonexistentEntityException;
 import java.awt.Color;
-import java.io.UnsupportedEncodingException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
@@ -20,12 +19,12 @@ import org.jdesktop.beansbinding.AutoBinding;
  *
  * @author aruna
  */
-public class ClientWindow extends javax.swing.JFrame {
+public class ClientsWindow extends javax.swing.JFrame {
 
     /**
      * Creates new form Catagory
      */
-    public ClientWindow() {
+    public ClientsWindow() {
         initComponents();
     }
 
@@ -40,29 +39,23 @@ public class ClientWindow extends javax.swing.JFrame {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         POSPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("POSPU").createEntityManager();
-        balancingQuery = java.beans.Beans.isDesignTime() ? null : POSPUEntityManager.createQuery("SELECT b FROM Balancing b");
-        balancingList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : balancingQuery.getResultList();
-        clientsQuery = java.beans.Beans.isDesignTime() ? null : POSPUEntityManager.createQuery("SELECT c.clientName FROM Clients c");
+        clientsQuery = java.beans.Beans.isDesignTime() ? null : POSPUEntityManager.createQuery("SELECT c FROM Clients c");
         clientsList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clientsQuery.getResultList();
         mainPanel = new javax.swing.JPanel();
         mainMenuBtnLabel = new javax.swing.JLabel();
         typeLabel = new javax.swing.JLabel();
         addPanel = new javax.swing.JPanel();
-        clientSelecLabel = new javax.swing.JLabel();
-        giveLabel = new javax.swing.JLabel();
-        takeLabel = new javax.swing.JLabel();
-        giveBox = new javax.swing.JTextField();
-        takeBox = new javax.swing.JTextField();
-        clientSelectCombo = new javax.swing.JComboBox<String>();
+        idLabel = new javax.swing.JLabel();
+        cIdBox = new javax.swing.JTextField();
         addButton = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        balanceLabel = new javax.swing.JLabel();
-        submitButton = new javax.swing.JButton();
-        refreshButton = new javax.swing.JButton();
+        editButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        nameLabel = new javax.swing.JLabel();
+        cNameBox = new javax.swing.JTextField();
+        tableScrollPane = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
         storeNameLabel = new javax.swing.JLabel();
         firmNameLabel = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        table = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -101,20 +94,14 @@ public class ClientWindow extends javax.swing.JFrame {
         addPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         addPanel.setName("product"); // NOI18N
 
-        clientSelecLabel.setText("Select Client");
+        idLabel.setText("Client's Id");
 
-        giveLabel.setText("Give");
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, table, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.clientId}"), cIdBox, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
 
-        takeLabel.setText("Take");
-
-        giveBox.setToolTipText("");
-
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, clientsList, clientSelectCombo);
-        bindingGroup.addBinding(jComboBoxBinding);
-
-        clientSelectCombo.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                clientSelectComboItemStateChanged(evt);
+        cIdBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cIdBoxActionPerformed(evt);
             }
         });
 
@@ -125,19 +112,28 @@ public class ClientWindow extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Have to Pay : Rs.");
-
-        submitButton.setText("Submit");
-        submitButton.addActionListener(new java.awt.event.ActionListener() {
+        editButton.setText("Edit");
+        editButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                submitButtonActionPerformed(evt);
+                editButtonActionPerformed(evt);
             }
         });
 
-        refreshButton.setText("Refresh");
-        refreshButton.addActionListener(new java.awt.event.ActionListener() {
+        deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                refreshButtonActionPerformed(evt);
+                deleteButtonActionPerformed(evt);
+            }
+        });
+
+        nameLabel.setText("Client's Name");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, table, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.clientName}"), cNameBox, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        cNameBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cNameBoxActionPerformed(evt);
             }
         });
 
@@ -146,59 +142,59 @@ public class ClientWindow extends javax.swing.JFrame {
         addPanelLayout.setHorizontalGroup(
             addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(addPanelLayout.createSequentialGroup()
-                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(247, 247, 247)
+                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(addPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(takeLabel)
-                            .addComponent(giveLabel))
-                        .addGap(18, 18, 18)
-                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(giveBox, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(takeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(addPanelLayout.createSequentialGroup()
-                        .addGap(197, 197, 197)
-                        .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(addButton)
-                            .addGroup(addPanelLayout.createSequentialGroup()
-                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(clientSelecLabel)
-                                    .addComponent(jLabel1))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(clientSelectCombo, 0, 250, Short.MAX_VALUE)
-                                    .addComponent(balanceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addComponent(submitButton)))
+                        .addComponent(nameLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(116, Short.MAX_VALUE))
+                        .addComponent(cNameBox, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(addPanelLayout.createSequentialGroup()
+                        .addComponent(addButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(editButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(deleteButton))
+                    .addGroup(addPanelLayout.createSequentialGroup()
+                        .addComponent(idLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cIdBox, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(246, 246, 246))
         );
         addPanelLayout.setVerticalGroup(
             addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(addPanelLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(clientSelecLabel)
-                    .addComponent(clientSelectCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(submitButton)
-                    .addComponent(refreshButton))
+                    .addComponent(idLabel)
+                    .addComponent(cIdBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(balanceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(nameLabel)
+                    .addComponent(cNameBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(giveLabel)
-                    .addComponent(giveBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
-                .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(takeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(takeLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(addButton)
-                .addContainerGap(33, Short.MAX_VALUE))
+                    .addComponent(addButton)
+                    .addComponent(editButton)
+                    .addComponent(deleteButton))
+                .addGap(26, 26, 26))
         );
+
+        table.setBackground(java.awt.Color.lightGray);
+        table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, clientsList, table);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${clientId}"));
+        columnBinding.setColumnName("Client Id");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${clientName}"));
+        columnBinding.setColumnName("Client Name");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${toPay}"));
+        columnBinding.setColumnName("To Pay");
+        columnBinding.setColumnClass(Float.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        tableScrollPane.setViewportView(table);
 
         storeNameLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         storeNameLabel.setForeground(java.awt.Color.white);
@@ -206,42 +202,27 @@ public class ClientWindow extends javax.swing.JFrame {
 
         firmNameLabel.setText("Powerd by Kode");
 
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, balancingList, table);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${time}"));
-        columnBinding.setColumnName("Time");
-        columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${give}"));
-        columnBinding.setColumnName("Give");
-        columnBinding.setColumnClass(Float.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${take}"));
-        columnBinding.setColumnName("Take");
-        columnBinding.setColumnClass(Float.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${toPay}"));
-        columnBinding.setColumnName("To Pay");
-        columnBinding.setColumnClass(Float.class);
-        bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();
-        jScrollPane1.setViewportView(table);
-
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainMenuBtnLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(mainMenuBtnLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(storeNameLabel)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(typeLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(firmNameLabel))
-                    .addComponent(addPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addComponent(typeLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(firmNameLabel))
+                            .addComponent(tableScrollPane)
+                            .addComponent(addPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(storeNameLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,10 +238,10 @@ public class ClientWindow extends javax.swing.JFrame {
                         .addComponent(firmNameLabel)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(addPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(tableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mainMenuBtnLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(mainMenuBtnLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -279,69 +260,17 @@ public class ClientWindow extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    
-    
-    
-    private void newTransaction(){
-        float gv,tk;
-        String id;
-        db.Balancing trans = new db.Balancing();
-        db.Clients client = new db.Clients();
 
-        if (giveBox.getText().isEmpty()){
-            gv=0;
-        }
-        else{
-            gv = Float.parseFloat(giveBox.getText());
-        }
-        if (takeBox.getText().isEmpty()){
-            tk=0;
-        }
-        else{
-            tk = Float.parseFloat(takeBox.getText());
-        }
-        
-        id = cjc.findClientsEntities().get(clientSelectCombo.getSelectedIndex()).getClientId(); 
-        float toPay=Float.parseFloat(table.getValueAt(table.getRowCount()-1, 3).toString())+gv-tk;
-        
-        trans.setClientId(id);
-        trans.setTime(java.sql.Timestamp.valueOf(java.time.LocalDateTime.now()));
-        trans.setGive(gv);
-        trans.setTake(tk);
-        trans.setToPay(toPay);
-        
-        client.setClientId(id);
-        client.setClientName(cjc.findClients(id).getClientName());
-        client.setToPay(toPay);
-        
-        try {
-            cjc.edit(client);
-        } catch (Exception ex) {
-            Logger.getLogger(ClientWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        try {
-            bjc.create(trans);
-        } catch (Exception ex) {
-            Logger.getLogger(ClientWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }
-    
     private void bindTable(){
-        balancingQuery = java.beans.Beans.isDesignTime() ? null : POSPUEntityManager.createQuery("SELECT b FROM Balancing b WHERE b.clientId='"+cjc.findClientsEntities().get(clientSelectCombo.getSelectedIndex()).getClientId()+"'");
-        balancingList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : balancingQuery.getResultList();
-        
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, balancingList, table);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${time}"));
-        columnBinding.setColumnName("Time");
-        columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${give}"));
-        columnBinding.setColumnName("Give");
-        columnBinding.setColumnClass(Float.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${take}"));
-        columnBinding.setColumnName("Take");
-        columnBinding.setColumnClass(Float.class);
+        clientsQuery = java.beans.Beans.isDesignTime() ? null : POSPUEntityManager.createQuery("SELECT c FROM Clients c");
+        clientsList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clientsQuery.getResultList();
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, clientsList, table);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${clientId}"));
+        columnBinding.setColumnName("Client Id");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${clientName}"));
+        columnBinding.setColumnName("Client Name");
+        columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${toPay}"));
         columnBinding.setColumnName("To Pay");
         columnBinding.setColumnClass(Float.class);
@@ -349,20 +278,56 @@ public class ClientWindow extends javax.swing.JFrame {
         jTableBinding.bind();
     }
     
-    private void bindLabel(){
-        balanceLabel.setText(table.getValueAt(table.getRowCount()-1, 3).toString());
+    private void addClient(){
+        String cId,cName;
+        db.Clients client = new db.Clients();
+        
+        cId = cIdBox.getText();
+        cName = cNameBox.getText();
+        client.setClientId(cId);
+        client.setClientName(cName);
+        
+        try {
+            cjc.create(client);
+        } catch (Exception ex) {
+            Logger.getLogger(ClientsWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    private void editClient(){
+        String cName,cId;
+        
+        cId = table.getValueAt(table.getSelectedRow(), 0).toString();
+        db.Clients client = new db.Clients(cId);
+        cName = cNameBox.getText();
+        client.setClientName(cName);
+        
+        try {
+            cjc.edit(client);
+        } catch (Exception ex) {
+            Logger.getLogger(ClientsWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void deleteClient(){
+        String cId;
+        
+        cId = table.getValueAt(table.getSelectedRow(), 0).toString();
+        try {
+            cjc.destroy(cId);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ClientsWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private void mainMenuBtnLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainMenuBtnLabelMouseClicked
         this.dispose();
+        // TODO add your handling code here:
     }//GEN-LAST:event_mainMenuBtnLabelMouseClicked
-   
+    
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        bindTable();
-        giveBox.setEnabled(false);
-        takeBox.setEnabled(false);
-        addButton.setEnabled(false);
-        //table.setVisible(false);
+               // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
     private void mainMenuBtnLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainMenuBtnLabelMouseEntered
@@ -373,36 +338,30 @@ public class ClientWindow extends javax.swing.JFrame {
         mainMenuBtnLabel.setForeground(Color.white);  // TODO add your handling code here:
     }//GEN-LAST:event_mainMenuBtnLabelMouseExited
 
-    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        deleteClient();
         bindTable();
-        bindLabel();
-        giveBox.setEnabled(true);
-        takeBox.setEnabled(true);
-        addButton.setEnabled(true);// TODO add your handling code here:
-        clientSelectCombo.setEnabled(false);
-        table.setVisible(true);
-    }//GEN-LAST:event_submitButtonActionPerformed
+
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
+        editClient();
+        bindTable();
+    }//GEN-LAST:event_editButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        newTransaction();
+        addClient();
         bindTable();
-        bindLabel();
+        // TODO add your handling code here:
     }//GEN-LAST:event_addButtonActionPerformed
 
-    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
-        giveBox.setEnabled(false);
-        takeBox.setEnabled(false);
-        addButton.setEnabled(false);// TODO add your handling code here:
-        clientSelectCombo.setEnabled(true);
-        bindTable();
-        bindLabel();
-        //table.setVisible(false);
-    }//GEN-LAST:event_refreshButtonActionPerformed
+    private void cIdBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cIdBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cIdBoxActionPerformed
 
-    private void clientSelectComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_clientSelectComboItemStateChanged
-        bindTable();
-        bindLabel();
-    }//GEN-LAST:event_clientSelectComboItemStateChanged
+    private void cNameBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cNameBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cNameBoxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -421,13 +380,13 @@ public class ClientWindow extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ClientWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClientsWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ClientWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClientsWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ClientWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClientsWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ClientWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClientsWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -561,7 +520,7 @@ public class ClientWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ClientWindow().setVisible(true);
+                new ClientsWindow().setVisible(true);
                 
             }
         });
@@ -571,30 +530,23 @@ public class ClientWindow extends javax.swing.JFrame {
     private javax.persistence.EntityManager POSPUEntityManager;
     public javax.swing.JButton addButton;
     private javax.swing.JPanel addPanel;
-    private javax.swing.JLabel balanceLabel;
-    private java.util.List<db.Balancing> balancingList;
-    private javax.persistence.Query balancingQuery;
-    private javax.swing.JLabel clientSelecLabel;
-    private javax.swing.JComboBox<String> clientSelectCombo;
+    private javax.swing.JTextField cIdBox;
+    private javax.swing.JTextField cNameBox;
     private java.util.List<db.Clients> clientsList;
     private javax.persistence.Query clientsQuery;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JButton editButton;
     private javax.swing.JLabel firmNameLabel;
-    private javax.swing.JTextField giveBox;
-    private javax.swing.JLabel giveLabel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel idLabel;
     private javax.swing.JLabel mainMenuBtnLabel;
     private javax.swing.JPanel mainPanel;
-    private javax.swing.JButton refreshButton;
+    private javax.swing.JLabel nameLabel;
     private javax.swing.JLabel storeNameLabel;
-    private javax.swing.JButton submitButton;
     private javax.swing.JTable table;
-    private javax.swing.JTextField takeBox;
-    private javax.swing.JLabel takeLabel;
+    private javax.swing.JScrollPane tableScrollPane;
     private javax.swing.JLabel typeLabel;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
-    public EntityManagerFactory emf = Persistence.createEntityManagerFactory("POSPU");
-    public db.ClientsJpaController cjc= new db.ClientsJpaController(emf);
-    public db.BalancingJpaController bjc = new db.BalancingJpaController(emf);
+    public EntityManagerFactory emf=Persistence.createEntityManagerFactory("POSPU");
+    public db.ClientsJpaController cjc = new db.ClientsJpaController(emf);
 }

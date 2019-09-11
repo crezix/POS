@@ -246,6 +246,6 @@ public class LoginWindow extends javax.swing.JFrame {
     private javax.swing.JTextField usernameBox;
     // End of variables declaration//GEN-END:variables
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("POSPU");
-    WelcomeWindow App = new WelcomeWindow();
+    Welcome App = new Welcome();
     //db.LoginDetailsJpaController ljc = new db.LoginDetailsJpaController(emf);
 }

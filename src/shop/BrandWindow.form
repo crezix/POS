@@ -7,22 +7,22 @@
         <Property name="persistenceUnit" type="java.lang.String" value="POSPU"/>
       </Properties>
     </Component>
-    <Component class="javax.persistence.Query" name="categoryQuery">
+    <Component class="javax.persistence.Query" name="brandQuery">
       <Properties>
-        <Property name="query" type="java.lang.String" value="SELECT c FROM Category c"/>
+        <Property name="query" type="java.lang.String" value="SELECT b FROM Brand b"/>
         <Property name="entityManager" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$EMProperty$EntityManagerEditor">
           <ComponentRef name="POSPUEntityManager"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="java.util.List" name="categoryList">
+    <Component class="java.util.List" name="brandList">
       <Properties>
         <Property name="query" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$QueryBeanProperty$QueryEditor">
-          <ComponentRef name="categoryQuery"/>
+          <ComponentRef name="brandQuery"/>
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;db.Category&gt;"/>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;db.Brand&gt;"/>
       </AuxValues>
     </Component>
   </NonVisualComponents>
@@ -155,7 +155,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Category"/>
+            <Property name="text" type="java.lang.String" value="Brand"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JPanel" name="addPanel">
@@ -187,7 +187,7 @@
                           <Group type="102" attributes="0">
                               <Component id="productLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="categoryBox" min="-2" pref="250" max="-2" attributes="0"/>
+                              <Component id="brandBox" min="-2" pref="250" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
@@ -200,7 +200,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="productLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="categoryBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="brandBox" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -216,17 +216,17 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="productLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Category"/>
+                <Property name="text" type="java.lang.String" value="Brand"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="categoryBox">
+            <Component class="javax.swing.JTextField" name="brandBox">
               <BindingProperties>
-                <BindingProperty name="text" source="table" sourcePath="${selectedElement.category}" target="categoryBox" targetPath="text" updateStrategy="0" immediately="false">
+                <BindingProperty name="text" source="table" sourcePath="${selectedElement.brand}" target="brandBox" targetPath="text" updateStrategy="0" immediately="false">
                   <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                 </BindingProperty>
               </BindingProperties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="categoryBoxActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="brandBoxActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="addButton">
@@ -332,11 +332,11 @@
                 </Property>
               </Properties>
               <BindingProperties>
-                <BindingProperty name="elements" source="categoryList" target="table" targetPath="elements" updateStrategy="0" immediately="true">
+                <BindingProperty name="elements" source="brandList" target="table" targetPath="elements" updateStrategy="0" immediately="true">
                   <Subbinding sourcePath="${id}">
                     <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
                   </Subbinding>
-                  <Subbinding sourcePath="${category}">
+                  <Subbinding sourcePath="${brand}">
                     <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                   </Subbinding>
                 </BindingProperty>

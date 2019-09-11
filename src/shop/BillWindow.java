@@ -261,6 +261,18 @@ public class BillWindow extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+    private void listBind(){
+        qtyQuery = java.beans.Beans.isDesignTime() ? null : POSPUEntityManager.createQuery("SELECT p.qty FROM Product p");
+        qtyList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : qtyQuery.getResultList();
+        
+        for(int i = 0; i<productList.size(); i++){
+            String prd = prCodeList.get(i)+" - "+productList.get(i)+" ("+qtyList.get(i)+") - "+brandList.get(i);
+            prList.add(i,prd);
+        }
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, prList, productCombo);
+        bindingGroup.addBinding(jComboBoxBinding);
+    }
+            
     private void addProduct(){
         String product,costPrice,qty;
         double cost;
@@ -273,7 +285,7 @@ public class BillWindow extends javax.swing.JFrame {
         }
         costPrice = retailPriceBox.getText();
         qty = qtyBox.getText();
-        cost = (Double.parseDouble(qty)*Double.parseDouble(costPrice));
+        cost = (Float.parseFloat(qty)*Float.parseFloat(costPrice));
         
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.addRow(new Object[]{product,qty,costPrice,cost});
@@ -286,7 +298,7 @@ public class BillWindow extends javax.swing.JFrame {
     
     private void addBill(){
         String sumStr, billMonth, billName;
-        double sum=0;
+        float sum=0;
         int i= 0;
         
         billMonth = java.time.LocalDateTime.now().getMonth().toString();//.split("=")[1].split("T")[0]+"S";
@@ -296,7 +308,7 @@ public class BillWindow extends javax.swing.JFrame {
         db.Account acc = new db.Account(billName);
         
         while(i<table.getRowCount()){
-            sum= sum+Double.parseDouble(table.getValueAt(i, 3).toString());
+            sum= sum+Float.parseFloat(table.getValueAt(i, 3).toString());
             i=i+1;
         }
         sumStr = ""+sum+"";
@@ -335,21 +347,25 @@ public class BillWindow extends javax.swing.JFrame {
     }
     
     private void reduceQty(){
-        double qty,qtyDb,qtyFinal;
+        float qty,qtyDb,qtyFinal;
         int i = 0;
         int rowCount = table.getRowCount();
         while (i<rowCount){
-            qty = Double.parseDouble(table.getValueAt(i, 3).toString());
+            qty = Float.parseFloat(table.getValueAt(i, 1).toString());
             String prName = table.getValueAt(i, 0).toString().split(" ")[0];
-            qtyDb = Double.parseDouble(pjc.findProduct(prName).getQty());
+            qtyDb = Float.parseFloat(pjc.findProduct(prName).getQty());
             qtyFinal = qtyDb-qty;
-            
+            System.out.print(qtyFinal);
             db.Product pr = new db.Product(prName);
-            pr.setQty(String.valueOf(qtyFinal));
-            pr.setBarcode(pr.getBarcode());
-            pr.setBrand(pr.getBrand());
-            pr.setCategory(pr.getCategory());
-            pr.setDescription(pr.getDescription());
+            pr.setQty(""+qtyFinal);
+            pr.setBarcode(pjc.findProduct(prName).getBarcode());
+            pr.setBrand(pjc.findProduct(prName).getBrand());
+            pr.setCategory(pjc.findProduct(prName).getCategory());
+            pr.setDescription(pjc.findProduct(prName).getDescription());
+            pr.setProduct(pjc.findProduct(prName).getProduct());
+            pr.setRetailPrice(pjc.findProduct(prName).getRetailPrice());
+            pr.setStatus(pjc.findProduct(prName).getStatus());
+            pr.setCostPrice(pjc.findProduct(prName).getCostPrice());
             
             try {
                 pjc.edit(pr);
@@ -370,7 +386,8 @@ public class BillWindow extends javax.swing.JFrame {
 
     private void addBillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBillButtonActionPerformed
         addBill();
-        //reduceQty();
+        reduceQty();
+        listBind();
     }//GEN-LAST:event_addBillButtonActionPerformed
 
     private void newBillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newBillButtonActionPerformed

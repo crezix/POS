@@ -265,10 +265,10 @@ public class StockWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void addStockButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStockButtonActionPerformed
-        double sum=0;
+        float sum=0;
         int i= 0;
         while(i<table.getRowCount()){
-            sum= sum+Double.parseDouble(table.getValueAt(i, 3).toString());
+            sum= sum+Float.parseFloat(table.getValueAt(i, 3).toString());
             i=i+1;
         }
         String sumStr = ""+sum+"";

@@ -19,9 +19,9 @@ import javax.persistence.criteria.Root;
  *
  * @author iresh
  */
-public class BalancingJpaController implements Serializable {
+public class CategoryJpaController implements Serializable {
 
-    public BalancingJpaController(EntityManagerFactory emf) {
+    public CategoryJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
@@ -30,12 +30,12 @@ public class BalancingJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Balancing balancing) {
+    public void create(Category category) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(balancing);
+            em.persist(category);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -44,19 +44,19 @@ public class BalancingJpaController implements Serializable {
         }
     }
 
-    public void edit(Balancing balancing) throws NonexistentEntityException, Exception {
+    public void edit(Category category) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            balancing = em.merge(balancing);
+            category = em.merge(category);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = balancing.getId();
-                if (findBalancing(id) == null) {
-                    throw new NonexistentEntityException("The balancing with id " + id + " no longer exists.");
+                Integer id = category.getId();
+                if (findCategory(id) == null) {
+                    throw new NonexistentEntityException("The category with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -72,14 +72,14 @@ public class BalancingJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Balancing balancing;
+            Category category;
             try {
-                balancing = em.getReference(Balancing.class, id);
-                balancing.getId();
+                category = em.getReference(Category.class, id);
+                category.getId();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The balancing with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The category with id " + id + " no longer exists.", enfe);
             }
-            em.remove(balancing);
+            em.remove(category);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -88,19 +88,19 @@ public class BalancingJpaController implements Serializable {
         }
     }
 
-    public List<Balancing> findBalancingEntities() {
-        return findBalancingEntities(true, -1, -1);
+    public List<Category> findCategoryEntities() {
+        return findCategoryEntities(true, -1, -1);
     }
 
-    public List<Balancing> findBalancingEntities(int maxResults, int firstResult) {
-        return findBalancingEntities(false, maxResults, firstResult);
+    public List<Category> findCategoryEntities(int maxResults, int firstResult) {
+        return findCategoryEntities(false, maxResults, firstResult);
     }
 
-    private List<Balancing> findBalancingEntities(boolean all, int maxResults, int firstResult) {
+    private List<Category> findCategoryEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Balancing.class));
+            cq.select(cq.from(Category.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -112,20 +112,20 @@ public class BalancingJpaController implements Serializable {
         }
     }
 
-    public Balancing findBalancing(Integer id) {
+    public Category findCategory(Integer id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Balancing.class, id);
+            return em.find(Category.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getBalancingCount() {
+    public int getCategoryCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Balancing> rt = cq.from(Balancing.class);
+            Root<Category> rt = cq.from(Category.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();

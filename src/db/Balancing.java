@@ -5,20 +5,19 @@
  */
 package db;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -32,45 +31,49 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Balancing.findAll", query = "SELECT b FROM Balancing b"),
     @NamedQuery(name = "Balancing.findById", query = "SELECT b FROM Balancing b WHERE b.id = :id"),
     @NamedQuery(name = "Balancing.findByTime", query = "SELECT b FROM Balancing b WHERE b.time = :time"),
-    @NamedQuery(name = "Balancing.findByClientName", query = "SELECT b FROM Balancing b WHERE b.clientName = :clientName"),
+    @NamedQuery(name = "Balancing.findByClientId", query = "SELECT b FROM Balancing b WHERE b.clientId = :clientId"),
     @NamedQuery(name = "Balancing.findByGive", query = "SELECT b FROM Balancing b WHERE b.give = :give"),
     @NamedQuery(name = "Balancing.findByTake", query = "SELECT b FROM Balancing b WHERE b.take = :take"),
     @NamedQuery(name = "Balancing.findByToPay", query = "SELECT b FROM Balancing b WHERE b.toPay = :toPay")})
 public class Balancing implements Serializable {
-    @Transient
-    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private String id;
+    private Integer id;
+    @Basic(optional = false)
     @Column(name = "time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date time;
-    @Column(name = "client_name")
-    private String clientName;
+    @Column(name = "client_id")
+    private String clientId;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "give")
-    private String give;
+    private Float give;
     @Column(name = "take")
-    private String take;
+    private Float take;
     @Column(name = "to_pay")
-    private String toPay;
+    private Float toPay;
 
     public Balancing() {
     }
 
-    public Balancing(String id) {
+    public Balancing(Integer id) {
         this.id = id;
     }
 
-    public String getId() {
+    public Balancing(Integer id, Date time) {
+        this.id = id;
+        this.time = time;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
-        String oldId = this.id;
+    public void setId(Integer id) {
         this.id = id;
-        changeSupport.firePropertyChange("id", oldId, id);
     }
 
     public Date getTime() {
@@ -78,49 +81,39 @@ public class Balancing implements Serializable {
     }
 
     public void setTime(Date time) {
-        Date oldTime = this.time;
         this.time = time;
-        changeSupport.firePropertyChange("time", oldTime, time);
     }
 
-    public String getClientName() {
-        return clientName;
+    public String getClientId() {
+        return clientId;
     }
 
-    public void setClientName(String clientName) {
-        String oldClientName = this.clientName;
-        this.clientName = clientName;
-        changeSupport.firePropertyChange("clientName", oldClientName, clientName);
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 
-    public String getGive() {
+    public Float getGive() {
         return give;
     }
 
-    public void setGive(String give) {
-        String oldGive = this.give;
+    public void setGive(Float give) {
         this.give = give;
-        changeSupport.firePropertyChange("give", oldGive, give);
     }
 
-    public String getTake() {
+    public Float getTake() {
         return take;
     }
 
-    public void setTake(String take) {
-        String oldTake = this.take;
+    public void setTake(Float take) {
         this.take = take;
-        changeSupport.firePropertyChange("take", oldTake, take);
     }
 
-    public String getToPay() {
+    public Float getToPay() {
         return toPay;
     }
 
-    public void setToPay(String toPay) {
-        String oldToPay = this.toPay;
+    public void setToPay(Float toPay) {
         this.toPay = toPay;
-        changeSupport.firePropertyChange("toPay", oldToPay, toPay);
     }
 
     @Override
@@ -146,14 +139,6 @@ public class Balancing implements Serializable {
     @Override
     public String toString() {
         return "db.Balancing[ id=" + id + " ]";
-    }
-
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.addPropertyChangeListener(listener);
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.removePropertyChangeListener(listener);
     }
     
 }

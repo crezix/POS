@@ -32,6 +32,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Account.findByCost", query = "SELECT a FROM Account a WHERE a.cost = :cost"),
     @NamedQuery(name = "Account.findByPrice", query = "SELECT a FROM Account a WHERE a.price = :price")})
 public class Account implements Serializable {
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "cost")
+    private Float cost;
+    @Column(name = "price")
+    private Float price;
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
     @Column(name = "time")
@@ -41,11 +46,6 @@ public class Account implements Serializable {
     @Basic(optional = false)
     @Column(name = "st_or_bill")
     private String stOrBill;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "cost")
-    private Double cost;
-    @Column(name = "price")
-    private Double price;
 
     public Account() {
     }
@@ -75,21 +75,6 @@ public class Account implements Serializable {
         this.stOrBill = stOrBill;
     }
 
-    public Double getCost() {
-        return cost;
-    }
-
-    public void setCost(Double cost) {
-        this.cost = cost;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
 
     @Override
     public int hashCode() {
@@ -114,6 +99,22 @@ public class Account implements Serializable {
     @Override
     public String toString() {
         return "db.Account[ stOrBill=" + stOrBill + " ]";
+    }
+
+    public Float getCost() {
+        return cost;
+    }
+
+    public void setCost(Float cost) {
+        this.cost = cost;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
     }
     
 }

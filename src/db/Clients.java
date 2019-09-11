@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Clients.findAll", query = "SELECT c FROM Clients c"),
+    @NamedQuery(name = "Clients.findByClientId", query = "SELECT c FROM Clients c WHERE c.clientId = :clientId"),
     @NamedQuery(name = "Clients.findByClientName", query = "SELECT c FROM Clients c WHERE c.clientName = :clientName"),
     @NamedQuery(name = "Clients.findByToPay", query = "SELECT c FROM Clients c WHERE c.toPay = :toPay")})
 public class Clients implements Serializable {
@@ -35,16 +36,29 @@ public class Clients implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @Column(name = "client_id")
+    private String clientId;
     @Column(name = "client_name")
     private String clientName;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "to_pay")
-    private String toPay;
+    private Float toPay;
 
     public Clients() {
     }
 
-    public Clients(String clientName) {
-        this.clientName = clientName;
+    public Clients(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        String oldClientId = this.clientId;
+        this.clientId = clientId;
+        changeSupport.firePropertyChange("clientId", oldClientId, clientId);
     }
 
     public String getClientName() {
@@ -57,12 +71,12 @@ public class Clients implements Serializable {
         changeSupport.firePropertyChange("clientName", oldClientName, clientName);
     }
 
-    public String getToPay() {
+    public Float getToPay() {
         return toPay;
     }
 
-    public void setToPay(String toPay) {
-        String oldToPay = this.toPay;
+    public void setToPay(Float toPay) {
+        Float oldToPay = this.toPay;
         this.toPay = toPay;
         changeSupport.firePropertyChange("toPay", oldToPay, toPay);
     }
@@ -70,7 +84,7 @@ public class Clients implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (clientName != null ? clientName.hashCode() : 0);
+        hash += (clientId != null ? clientId.hashCode() : 0);
         return hash;
     }
 
@@ -81,7 +95,7 @@ public class Clients implements Serializable {
             return false;
         }
         Clients other = (Clients) object;
-        if ((this.clientName == null && other.clientName != null) || (this.clientName != null && !this.clientName.equals(other.clientName))) {
+        if ((this.clientId == null && other.clientId != null) || (this.clientId != null && !this.clientId.equals(other.clientId))) {
             return false;
         }
         return true;
@@ -89,7 +103,7 @@ public class Clients implements Serializable {
 
     @Override
     public String toString() {
-        return "db.Clients[ clientName=" + clientName + " ]";
+        return "db.Clients[ clientId=" + clientId + " ]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
